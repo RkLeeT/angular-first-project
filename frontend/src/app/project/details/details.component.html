@@ -1,0 +1,52 @@
+<p>details works!</p>
+
+<div *ngIf='errorMsg' class="alert alert-danger">
+    {{ errorMsg }}
+</div>     
+
+
+
+<div class="row">
+    <div class="col-6">
+        <h3>Details from Array</h3>
+        <button (click)=getDetails()>Get Details</button>
+        <ul>
+            <li *ngFor='let detail of details; trackBy:getDetailsTrack'>
+                {{ detail | json}}
+                <div>
+                    {{ detail.id }}. {{detail.name}} - {{detail.age}}
+                </div>
+                
+            </li>
+        </ul>
+    </div>
+    <div class="col-6">
+        <h3>Details from HttpClient </h3>
+        <ul>
+            <ng-template ngFor let-i="index" let-c="count" let-httpDetail [ngForOf]='httpDetails'>
+                <li> 
+                    <b>{{i}}</b> : {{ httpDetail | json}}
+                    <div>
+                        {{ httpDetail.id }}. {{httpDetail.name}} - {{httpDetail.age}}
+                    </div>
+                </li>
+            </ng-template>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <h3>Details from JsonPlaceHolder </h3>
+        <ul>
+            <li *ngFor='let data of jsonData'>
+                <!-- {{ data | json}} -->
+                <p>
+                    <b>{{ data.userId }}.</b> {{data.id}} <br> 
+                    <b>Title:</b> {{data.title}} <br>
+                    <b>Body:</b> {{data.body}}
+                </p>
+                
+            </li>
+        </ul>
+    </div>
+</div>

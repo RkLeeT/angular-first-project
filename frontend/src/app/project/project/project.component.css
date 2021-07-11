@@ -1,0 +1,21 @@
+
+.routers {
+    margin: 20px 5px;
+}
+
+.routers a {
+    background: #203b54;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 10px;
+    margin: 10px;
+    text-decoration: none;
+}
+
+.routers a:hover {
+  color: #a4d2ff;
+}
+
+.router-active {
+    color: #a4d2ff !important;
+}

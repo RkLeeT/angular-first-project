@@ -1,0 +1,73 @@
+
+<div *ngIf='errorMsg' class="alert alert-danger fade show">
+    {{ errorMsg }}
+</div>
+<div *ngIf='successMsg' class="alert alert-info fade show">
+    {{ successMsg }}
+</div>
+
+<ng-component *ngIf="modalCondition; then logBlock; else regBlock"></ng-component>
+
+<ng-template #logBlock>
+    <form [formGroup]="loginForm" (submit)="submitLogin()">
+        <!-- {{ loginForm.value | json}} -->
+        <div class="form-group">
+            <label>Username</label>
+            <input formControlName="username" class="form-control"
+                [class.is-invalid]="userNameL.touched && userNameL.invalid" type="text">
+            <div *ngIf='userNameL.touched && userNameL.invalid'>
+                <small *ngIf='userNameL.errors.required' class="text-danger">Username is Required</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input formControlName="password" class="form-control" type="password">
+        </div>
+        <button [disabled]="!loginForm.valid" type="submit">Login</button>
+    </form>
+
+    <h3 class="text-center changeBtn">
+        <button class="btn btn-light btn-large" (click)="changeCond()">Create new Account</button>
+        <!-- <a routerLink="" (click)="changeCond()">Create new Account</a> -->
+    </h3>
+
+</ng-template>
+
+
+<ng-template #regBlock>
+    <form [formGroup]="registrationForm" (submit)="submitRegistration()">
+        <!-- {{ registrationForm.value | json}} -->
+        <div class="form-group">
+            <label>Username</label>
+            <input formControlName="username" class="form-control"
+                [class.is-invalid]="userNameR.touched && userNameR.invalid" type="text">
+            <div *ngIf='userNameR.touched && userNameR.invalid'>
+                <small *ngIf='userNameR.errors.required' class="text-danger">Username is Required</small>
+                <small *ngIf='userNameR.errors.minlength' class="text-danger">Username must be atleast 6
+                    characters</small>
+                <small *ngIf='userNameR.errors.forbiddenName' class="text-danger">Username: {{userNameR.value}} not
+                    allowed</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input formControlName="password" class="form-control" type="password">
+            <div *ngIf='password.touched && password.invalid'>
+                <small *ngIf='password.errors.minlength' class="text-danger">Password must be atleast 6
+                    characters</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input #inputPass formControlName="confirmPassword" class="form-control"
+                [class.is-invalid]='registrationForm.errors?.mismatch' type="password">
+            <!-- {{inputPass.className}} -->
+            <small *ngIf="registrationForm.hasError('mismatch')" class="text-danger">Passwords do no match</small>
+        </div>
+        <button [disabled]="!registrationForm.valid" type="submit">Register</button>
+    </form>
+    <h3 class="text-center changeBtn">
+        <button class="btn btn-light btn-large" (click)="changeCond()">Existing User? Log in</button>
+        <!-- <a routerLink="" (click)="changeCond()">Existing User? Log in</a> -->
+    </h3>
+</ng-template>
